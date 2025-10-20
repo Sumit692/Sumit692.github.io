@@ -5,35 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sumit Kumar Singh - Portfolio</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+  <!-- Google Fonts --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons --><script src="https://unpkg.com/lucide-react@0.378.0/dist/umd/lucide-react.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
 
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top left, #0f172a, #1e293b, #0f172a);
-      background-size: 300% 300%;
-      animation: bgMove 10s ease infinite;
+      background-color: #020617;
       color: #cbd5e1;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
+      overflow-x: hidden;
     }
-
-    @keyframes bgMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    
+    .spotlight {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: radial-gradient(circle at 50% 50%, transparent 100px, rgba(2, 6, 23, 0.95) 350px);
+        z-index: 9999;
     }
 
     .font-fira { font-family: 'Fira Code', monospace; }
 
     .gradient-text {
       background: linear-gradient(270deg, #22d3ee, #a5b4fc, #38bdf8);
-      background-size: 600% 600%;
+      background-size: 400% 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: gradientMove 8s ease infinite;
@@ -47,181 +50,317 @@
 
     .nav-blur {
       backdrop-filter: blur(12px);
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.7);
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    }
+    
+    main {
+        padding-top: 80px; /* Navbar height */
     }
 
     section {
-      position: absolute;
-      top: 80px;
-      left: 0;
-      right: 0;
-      bottom: 0;
       display: none;
       opacity: 0;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      overflow: hidden;
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      transform: scale(0.98);
     }
 
-    .active-section {
-      display: flex;
+    section.active-section {
+      display: block;
       opacity: 1;
-      transform: translateX(0);
+      transform: scale(1);
     }
 
     .nav-active {
       color: #22d3ee !important;
+      position: relative;
+    }
+    
+    .nav-active::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #22d3ee;
+        border-radius: 2px;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(51, 65, 85, 0.5);
       backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+      border-radius: 1.5rem; /* More rounded */
+      padding: 2.5rem;
+      box-shadow: 0 0 40px rgba(34, 211, 238, 0.1);
       transition: all 0.3s ease;
     }
 
     .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 50px rgba(34, 211, 238, 0.2);
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    
+    .skill-card, .project-card, .contact-link {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        transition: all 0.3s ease;
+    }
+    
+    .skill-card:hover, .project-card:hover, .contact-link:hover {
+        transform: translateY(-5px) scale(1.02);
+        background: #1e293b;
+        border-color: #38bdf8;
     }
 
-    .skill-badge {
-      @apply bg-slate-800 text-sky-300 text-sm font-medium px-5 py-2 rounded-full font-fira transition-transform hover:scale-110;
+    /* Animation for elements inside section */
+    .fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+        opacity: 0;
     }
 
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #94a3b8;
-      padding: 10px;
-      border-top: 1px solid #334155;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
+    
+    /* Staggered animation delays */
+    .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
+    .fade-in-up:nth-child(5) { animation-delay: 0.5s; }
+    .fade-in-up:nth-child(6) { animation-delay: 0.6s; }
+    .fade-in-up:nth-child(7) { animation-delay: 0.7s; }
+    .fade-in-up:nth-child(8) { animation-delay: 0.8s; }
+    .fade-in-up:nth-child(9) { animation-delay: 0.9s; }
+    .fade-in-up:nth-child(10) { animation-delay: 1.0s; }
+
+
   </style>
 </head>
 
 <body class="antialiased">
+  <!-- Spotlight Effect --><div class="spotlight"></div>
 
-  <!-- Navbar -->
-  <nav class="fixed top-0 left-0 w-full z-50 nav-blur border-b border-slate-700">
+  <!-- Navbar --><nav class="fixed top-0 left-0 w-full z-50 nav-blur">
     <div class="max-w-5xl mx-auto flex justify-between items-center px-6 py-4">
-      <h1 class="font-bold text-xl text-sky-300 font-fira">SKS Portfolio</h1>
-      <div class="space-x-6 text-slate-300 font-fira text-sm">
-        <button onclick="showSection('home')" class="hover:text-sky-400 nav-btn">Home</button>
-        <button onclick="showSection('about')" class="hover:text-sky-400 nav-btn">About</button>
-        <button onclick="showSection('skills')" class="hover:text-sky-400 nav-btn">Skills</button>
-        <button onclick="showSection('projects')" class="hover:text-sky-400 nav-btn">Projects</button>
-        <button onclick="showSection('resume')" class="hover:text-sky-400 nav-btn">Resume</button>
-        <button onclick="showSection('contact')" class="hover:text-sky-400 nav-btn">Contact</button>
+      <h1 class="font-bold text-xl text-sky-300 font-fira tracking-wider">SKS</h1>
+      <div class="hidden sm:flex items-center space-x-8 text-slate-300 font-fira text-sm">
+        <button onclick="showSection('home')" class="hover:text-sky-400 nav-btn transition-colors">Home</button>
+        <button onclick="showSection('about')" class="hover:text-sky-400 nav-btn transition-colors">About</button>
+        <button onclick="showSection('skills')" class="hover:text-sky-400 nav-btn transition-colors">Skills</button>
+        <button onclick="showSection('projects')" class="hover:text-sky-400 nav-btn transition-colors">Projects</button>
+        <button onclick="showSection('resume')" class="hover:text-sky-400 nav-btn transition-colors">Resume</button>
+        <button onclick="showSection('contact')" class="hover:text-sky-400 nav-btn transition-colors">Contact</button>
       </div>
+       <!-- Mobile Menu Button --><div class="sm:hidden">
+        <button id="mobile-menu-button" class="text-slate-300">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu --><div id="mobile-menu" class="hidden sm:hidden bg-slate-900/80 backdrop-blur-sm">
+        <div class="flex flex-col items-center space-y-4 py-4 font-fira">
+            <button onclick="showSection('home')" class="nav-btn">Home</button>
+            <button onclick="showSection('about')" class="nav-btn">About</button>
+            <button onclick="showSection('skills')" class="nav-btn">Skills</button>
+            <button onclick="showSection('projects')" class="nav-btn">Projects</button>
+            <button onclick="showSection('resume')" class="nav-btn">Resume</button>
+            <button onclick="showSection('contact')" class="nav-btn">Contact</button>
+        </div>
     </div>
   </nav>
 
-  <!-- Sections -->
-  <section id="home" class="active-section flex-col text-center">
-    <div>
-      <h1 class="text-5xl sm:text-6xl font-bold gradient-text mb-4">Sumit Kumar Singh</h1>
-      <p class="text-lg sm:text-xl text-slate-400 font-fira">Information Science Student | Tech Enthusiast</p>
-      <div class="mt-10 flex justify-center space-x-4">
-        <button onclick="showSection('projects')" class="bg-sky-500 hover:bg-sky-600 text-slate-900 px-6 py-3 rounded-full font-bold transition-all">View Projects</button>
-        <button onclick="showSection('contact')" class="border border-sky-400 text-sky-400 hover:bg-sky-400 hover:text-slate-900 px-6 py-3 rounded-full font-bold transition-all">Contact Me</button>
-      </div>
-    </div>
-  </section>
+  <main class="w-full min-h-screen">
+    <!-- Sections Wrapper --><div class="max-w-4xl mx-auto px-6 py-16 sm:py-24">
 
-  <section id="about" class="flex-col">
-    <div class="card max-w-3xl mx-auto text-left">
-      <h2 class="text-3xl font-bold text-slate-100 mb-6">👋 About Me</h2>
-      <p class="text-slate-400 leading-relaxed">
-        I'm a third-year Information Science student at Atria Institute of Technology, Bengaluru.
-        Skilled in Java and Python, I enjoy creating efficient and visually appealing software.
-        As a sports enthusiast, I’ve captained my school volleyball team and represent my college football team.
-        I thrive in teamwork and love solving real-world challenges through technology.
-      </p>
-    </div>
-  </section>
-
-  <section id="skills" class="flex-col">
-    <div class="card max-w-2xl mx-auto text-left">
-      <h2 class="text-3xl font-bold text-slate-100 mb-6">🧠 Skills</h2>
-      <div class="flex flex-col items-start gap-3">
-        <span class="skill-badge">Python</span>
-        <span class="skill-badge">Java</span>
-        <span class="skill-badge">C</span>
-        <span class="skill-badge">HTML/CSS</span>
-        <span class="skill-badge">JavaScript</span>
-        <span class="skill-badge">PHP</span>
-        <span class="skill-badge">MySQL</span>
-        <span class="skill-badge">DBMS</span>
-        <span class="skill-badge">OS</span>
-        <span class="skill-badge">Web Development</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="flex-col">
-    <div class="card max-w-4xl mx-auto text-left">
-      <h2 class="text-3xl font-bold text-slate-100 mb-6">📂 Projects</h2>
-      <div class="space-y-6">
-        <div>
-          <h3 class="text-xl font-bold text-sky-400">COVID-19 Testing Management System</h3>
-          <p class="text-slate-400">PHP & MySQL web app for managing and tracking COVID-19 test records.</p>
+      <section id="home" class="active-section flex flex-col items-center text-center">
+        <div class="fade-in-up">
+            <h1 class="text-5xl sm:text-7xl font-bold gradient-text mb-4">Sumit Kumar Singh</h1>
+            <p class="text-lg sm:text-xl text-slate-400 font-fira">Information Science Student | Tech Enthusiast</p>
+            <div class="mt-12 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button onclick="showSection('projects')" class="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-slate-900 px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105">View My Work</button>
+                <button onclick="showSection('contact')" class="w-full sm:w-auto border-2 border-sky-400 text-sky-400 hover:bg-sky-400 hover:text-slate-900 px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105">Get In Touch</button>
+            </div>
         </div>
-        <div>
-          <h3 class="text-xl font-bold text-sky-400">Fitness Tracker App</h3>
-          <p class="text-slate-400">Responsive UI built from Figma designs for a fitness tracking app.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-sky-400">Portfolio CLI</h3>
-          <p class="text-slate-400">A Python CLI tool featuring GitHub API integration and dynamic styling.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-sky-400">To-Do Application</h3>
-          <p class="text-slate-400">A Java-based task manager that lets users add, update, and delete tasks with JDBC and MySQL integration.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-sky-400">Obstacle Avoiding Rover</h3>
-          <p class="text-slate-400">Arduino-powered rover that avoids obstacles using ultrasonic sensors.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section id="resume" class="flex-col">
-    <div class="card max-w-3xl mx-auto text-left">
-      <h2 class="text-3xl font-bold text-slate-100 mb-6">📜 Resume</h2>
-      <p class="text-slate-300 mb-2 font-fira">B.Tech in Information Science & Engineering</p>
-      <p class="text-slate-400">Atria Institute of Technology, Bengaluru (2023–2027)</p>
-      <p class="mt-4 text-slate-300">For a full copy of my resume, please contact me via email or LinkedIn.</p>
-    </div>
-  </section>
+      <section id="about">
+        <div class="card text-center">
+          <h2 class="text-4xl font-bold text-slate-100 mb-8 fade-in-up">About Me</h2>
+          <div class="flex flex-col md:flex-row items-center gap-12">
+            <img src="https://placehold.co/200x200/0f172a/38bdf8?text=SKS" alt="Sumit Kumar Singh" class="fade-in-up w-40 h-40 rounded-full border-4 border-slate-700 shadow-lg">
+            <p class="text-slate-400 leading-relaxed text-left fade-in-up" style="animation-delay: 0.2s;">
+              I'm a third-year Information Science student at Atria Institute of Technology, Bengaluru.
+              Skilled in Java and Python, I enjoy creating efficient and visually appealing software.
+              As a sports enthusiast, I’ve captained my school volleyball team and represent my college football team.
+              I thrive in teamwork and love solving real-world challenges through technology.
+            </p>
+          </div>
+        </div>
+      </section>
 
-  <section id="contact" class="flex-col">
-    <div class="card max-w-3xl mx-auto text-left">
-      <h2 class="text-3xl font-bold text-slate-100 mb-6">📞 Contact</h2>
-      <div class="flex flex-col space-y-4 text-slate-300">
-        <a href="mailto:sumitkumarsingh7502@gmail.com" class="hover:text-sky-400">📧 sumitkumarsingh7502@gmail.com</a>
-        <a href="https://github.com/Sumit692" target="_blank" class="hover:text-sky-400">💻 github.com/Sumit692</a>
-        <a href="https://www.linkedin.com/in/sumit-kumar-singh-624507203" target="_blank" class="hover:text-sky-400">🔗 LinkedIn Profile</a>
-      </div>
-    </div>
-  </section>
+      <section id="skills">
+        <div class="text-center">
+            <h2 class="text-4xl font-bold text-slate-100 mb-12 fade-in-up">My Tech Stack</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="code-xml" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">HTML/CSS</span>
+                </div>
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="file-json-2" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">JavaScript</span>
+                </div>
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="file-code-2" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">Python</span>
+                </div>
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="cup-soda" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">Java</span>
+                </div>
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="database" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">MySQL</span>
+                </div>
+                <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="file-code" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">PHP</span>
+                </div>
+                 <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="server" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">DBMS</span>
+                </div>
+                 <div class="skill-card fade-in-up p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <i data-lucide="laptop" class="w-12 h-12 text-sky-400 mb-3"></i>
+                    <span class="font-fira text-slate-300">OS Concepts</span>
+                </div>
+            </div>
+        </div>
+      </section>
+      
+      <section id="projects">
+        <div class="text-center">
+            <h2 class="text-4xl font-bold text-slate-100 mb-12 fade-in-up">Featured Projects</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1 --><div class="project-card fade-in-up p-8 rounded-2xl text-left flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-sky-400 mb-2">COVID-19 Management System</h3>
+                        <p class="text-slate-400">A web application built with PHP and MySQL for efficient management and tracking of COVID-19 test records.</p>
+                    </div>
+                    <div class="mt-6 flex space-x-4 text-slate-400">
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="external-link" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+                <!-- Project 2 --><div class="project-card fade-in-up p-8 rounded-2xl text-left flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-sky-400 mb-2">Fitness Tracker UI</h3>
+                        <p class="text-slate-400">A responsive and pixel-perfect user interface for a fitness tracking application, converted from Figma designs.</p>
+                    </div>
+                     <div class="mt-6 flex space-x-4 text-slate-400">
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="figma" class="w-6 h-6"></i></a>
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="external-link" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+                <!-- Project 3 --><div class="project-card fade-in-up p-8 rounded-2xl text-left flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-sky-400 mb-2">Portfolio CLI</h3>
+                        <p class="text-slate-400">A command-line interface portfolio tool developed in Python, featuring GitHub API integration and dynamic styling.</p>
+                    </div>
+                     <div class="mt-6 flex space-x-4 text-slate-400">
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="terminal" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+                <!-- Project 4 --><div class="project-card fade-in-up p-8 rounded-2xl text-left flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-sky-400 mb-2">Java To-Do App</h3>
+                        <p class="text-slate-400">A task manager application built with Java, featuring JDBC for MySQL integration to add, update, and delete tasks.</p>
+                    </div>
+                     <div class="mt-6 flex space-x-4 text-slate-400">
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+                <!-- Project 5 --><div class="project-card fade-in-up p-8 rounded-2xl text-left flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-sky-400 mb-2">Obstacle Avoiding Rover</h3>
+                        <p class="text-slate-400">An Arduino-powered rover that avoids obstacles using ultrasonic sensors, demonstrating hardware integration and real-time control.</p>
+                    </div>
+                    <div class="mt-6 flex space-x-4 text-slate-400">
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="#" class="hover:text-sky-300 transition-colors"><i data-lucide="toy-brick" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
 
-  <div class="footer">
-    © 2025 Sumit Kumar Singh. All Rights Reserved.
-  </div>
+      <section id="resume">
+        <div class="card text-center">
+          <h2 class="text-4xl font-bold text-slate-100 mb-6 fade-in-up">Resume</h2>
+          <p class="text-slate-300 mb-2 font-fira fade-in-up" style="animation-delay: 0.2s;">B.Tech in Information Science & Engineering</p>
+          <p class="text-slate-400 fade-in-up" style="animation-delay: 0.3s;">Atria Institute of Technology, Bengaluru (2023–2027)</p>
+          <p class="mt-6 text-slate-400 fade-in-up" style="animation-delay: 0.4s;">For a full copy of my resume, please contact me via email or LinkedIn.</p>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="card text-center">
+          <h2 class="text-4xl font-bold text-slate-100 mb-4 fade-in-up">Get In Touch</h2>
+          <p class="text-slate-400 mb-10 max-w-lg mx-auto fade-in-up" style="animation-delay: 0.2s;">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <a href="mailto:sumitkumarsingh7502@gmail.com" class="contact-link fade-in-up w-full sm:w-auto flex items-center justify-center gap-3 p-4 rounded-xl">
+              <i data-lucide="mail" class="w-6 h-6 text-sky-400"></i>
+              <span class="text-slate-300">Email</span>
+            </a>
+            <a href="https://github.com/Sumit692" target="_blank" class="contact-link fade-in-up w-full sm:w-auto flex items-center justify-center gap-3 p-4 rounded-xl">
+              <i data-lucide="github" class="w-6 h-6 text-sky-400"></i>
+              <span class="text-slate-300">GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/sumit-kumar-singh-624507203" target="_blank" class="contact-link fade-in-up w-full sm:w-auto flex items-center justify-center gap-3 p-4 rounded-xl">
+              <i data-lucide="linkedin" class="w-6 h-6 text-sky-400"></i>
+              <span class="text-slate-300">LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <footer class="text-center py-6 border-t border-slate-800">
+       <p class="text-slate-500 text-sm font-fira">© 2025 Sumit Kumar Singh. All Rights Reserved.</p>
+  </footer>
 
   <script>
     let currentSection = 'home';
+
+    // Spotlight effect
+    const spotlight = document.querySelector('.spotlight');
+    document.addEventListener('mousemove', (e) => {
+        if(spotlight) {
+            spotlight.style.background = `radial-gradient(circle at ${e.pageX}px ${e.pageY}px, transparent 100px, rgba(2, 6, 23, 0.95) 350px)`;
+        }
+    });
+    
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
 
     function showSection(sectionId) {
       if (sectionId === currentSection) return;
@@ -229,26 +368,43 @@
       const current = document.getElementById(currentSection);
       const next = document.getElementById(sectionId);
 
-      current.classList.remove('active-section');
-      current.style.opacity = 0;
-      current.style.display = 'none';
-
-      next.style.display = 'flex';
-      next.style.opacity = 0;
-      next.style.transform = 'translateX(100%)';
-
-      setTimeout(() => {
+      if (current) {
+        current.classList.remove('active-section');
+      }
+      
+      if (next) {
         next.classList.add('active-section');
-        next.style.transform = 'translateX(0)';
-        next.style.opacity = 1;
-      }, 50);
+      }
 
-      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("nav-active"));
-      const activeBtn = [...document.querySelectorAll(".nav-btn")].find(btn => btn.textContent.toLowerCase() === sectionId);
-      if (activeBtn) activeBtn.classList.add("nav-active");
+      // Update active nav button
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+          btn.classList.remove("nav-active");
+          if(btn.textContent.toLowerCase() === sectionId) {
+              btn.classList.add("nav-active");
+          }
+      });
+      
+      // Close mobile menu on selection
+       if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
 
       currentSection = sectionId;
     }
+    
+    // Initial setup
+    document.addEventListener('DOMContentLoaded', () => {
+        showSection('home');
+        lucide.createIcons();
+    });
+    
+    // Add event listeners to all nav buttons in mobile menu too
+    document.querySelectorAll('#mobile-menu .nav-btn').forEach(btn => {
+        const section = btn.textContent.toLowerCase();
+        btn.addEventListener('click', () => showSection(section));
+    });
+
   </script>
 </body>
 </html>
+
