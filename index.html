@@ -1,164 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumit Kumar Singh - Portfolio</title>
-    
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts for a modern look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
-    
-    <!-- Custom Styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* slate-900 */
-            color: #cbd5e1; /* slate-300 */
-        }
-        .font-fira {
-            font-family: 'Fira Code', monospace;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #22d3ee, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-header {
-            @apply text-2xl sm:text-3xl font-bold text-slate-100 mb-8 border-b-2 border-slate-700 pb-3;
-        }
-        .skill-badge {
-            @apply bg-slate-700 text-sky-300 text-sm font-medium px-4 py-2 rounded-full font-fira transition-transform hover:scale-105;
-        }
-        .project-card {
-            @apply bg-slate-800 border border-slate-700 p-6 rounded-lg shadow-lg hover:border-sky-500 hover:-translate-y-1 transition-all duration-300;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sumit Kumar Singh - Portfolio</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #1e293b, #0f172a);
+      background-size: 300% 300%;
+      animation: bgMove 10s ease infinite;
+      color: #cbd5e1;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .font-fira { font-family: 'Fira Code', monospace; }
+
+    .gradient-text {
+      background: linear-gradient(270deg, #22d3ee, #a5b4fc, #38bdf8);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 8s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    section {
+      position: absolute;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      opacity: 0;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      overflow: hidden;
+    }
+
+    .active-section {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-active {
+      color: #22d3ee !important;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+    }
+
+    .skill-badge {
+      @apply bg-slate-800 text-sky-300 text-sm font-medium px-5 py-2 rounded-full font-fira transition-transform hover:scale-110;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      padding: 10px;
+      border-top: 1px solid #334155;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+    }
+  </style>
 </head>
+
 <body class="antialiased">
 
-    <!-- Main Container -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-
-        <!-- Header Section -->
-        <header class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between mb-16">
-            <div>
-                <h1 class="text-4xl sm:text-5xl font-bold gradient-text">Sumit Kumar Singh</h1>
-                <p class="mt-2 text-lg sm:text-xl text-slate-400 font-fira">Information science student | Tech Enthusiast</p>
-            </div>
-        </header>
-
-        <main class="space-y-16">
-            <!-- About Me Section -->
-            <section id="about">
-                <h2 class="section-header">👋 About Me</h2>
-                <div class="space-y-4 text-slate-400 leading-relaxed">
-                    <p>
-                        I am a third-year Information Science student at Atria Institute of Technology, Bengaluru, with a strong foundation in programming languages including Java and Python. My academic journey is complemented by hands-on experience in software development and embedded systems.
-                    </p>
-                    <p>
-                        Beyond academics, I am an active athlete, having captained my school U-19 volleyball team and currently representing my college in football at VTU tournaments. These experiences have honed my leadership, teamwork, and discipline.
-                    </p>
-                    <p>
-                        I am eager to apply my technical skills and collaborative mindset to innovative projects and opportunities.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section id="skills">
-                <h2 class="section-header">🧠 Skills</h2>
-                <div class="flex flex-wrap gap-3">
-                    <span class="skill-badge">Python</span>
-                    <span class="skill-badge">Java</span>
-                    <span class="skill-badge">DBMS</span>
-                    <span class="skill-badge">Eclipse</span>
-                    <span class="skill-badge">OS</span>
-                    <span class="skill-badge">Web Development</span>
-                    <span class="skill-badge">HTML/CSS</span>
-                    <span class="skill-badge">JavaScript</span>
-                    <span class="skill-badge">PHP</span>
-                    <span class="skill-badge">MySQL</span>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects">
-                <h2 class="section-header">📂 Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Project Card 1 -->
-                    <div class="project-card">
-                        <h3 class="text-xl font-bold text-sky-400">COVID-19 Testing Management System</h3>
-                        <p class="mt-2 text-slate-400">A full-stack web application built with PHP and MySQL to efficiently manage and track COVID-19 test records.</p>
-                    </div>
-                    <!-- Project Card 2 -->
-                    <div class="project-card">
-                        <h3 class="text-xl font-bold text-sky-400">Fitness Tracker App</h3>
-                        <p class="mt-2 text-slate-400">A responsive user interface for a fitness tracking application, implemented from a Figma design using modern HTML and CSS.</p>
-                    </div>
-                    <!-- Project Card 3 -->
-                    <div class="project-card">
-                        <h3 class="text-xl font-bold text-sky-400">Portfolio CLI</h3>
-                        <p class="mt-2 text-slate-400">An interactive command-line portfolio built in Python, featuring colored output and live GitHub API integration.</p>
-                    </div>
-                    <!-- Project Card 4 -->
-                    <div class="project-card">
-                        <h3 class="text-xl font-bold text-sky-400">ToDo Application</h3>
-                        <p class="mt-2 text-slate-400">A task management application that allows users to create, update, delete, and manage their daily tasks effectively.</p>
-                    </div>
-                    <!-- Project Card 5 -->
-                    <div class="project-card">
-                        <h3 class="text-xl font-bold text-sky-400">Obstacle Avoiding Rover</h3>
-                        <p class="mt-2 text-slate-400">Obstacle Avoiding Rover using Arduino Uno - Designed an autonomous robotic car capable of navigating varied environments by integrating sensors with Arduino Uno.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Resume Section -->
-            <section id="resume">
-                 <h2 class="section-header">📜 Resume</h2>
-                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg">
-                     <h3 class="text-xl font-bold text-slate-100">B.Tech in Information Science & Engineering</h3>
-                     <p class="text-slate-400">ATRIA INSTITUTE OF TECHNOLOGY, Bengaluru (2023-2027)</p>
-                     <p class="mt-4 text-slate-300">My project work demonstrates my practical experience in web development, database management, and application design. For a full PDF copy of my resume, please feel free to contact me.</p>
-                 </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact">
-                <h2 class="section-header">📞 Contact</h2>
-                <div class="flex flex-wrap gap-6">
-                    <a href="mailto:sumitkumarsingh7502@gmail.com" class="flex items-center space-x-2 text-slate-300 hover:text-sky-400 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        <span>sumitkumarsingh7502@gmail.com</span>
-                    </a>
-                    <a href="https://github.com/Sumit692" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 text-slate-300 hover:text-sky-400 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6.1a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6.1-.6.5-.9 1.2-.9 2.2V22"/></svg>
-                        <span>github.com/Sumit692</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/sumit-kumar-singh-624507203" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 text-slate-300 hover:text-sky-400 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                        <span>LinkedIn Profile</span>
-                    </a>
-                </div>
-            </section>
-        </main>
-        
-        <!-- Footer -->
-        <footer class="text-center text-slate-500 mt-16">
-            <p>&copy; 2025 Sumit Kumar Singh. All Rights Reserved.</p>
-        </footer>
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full z-50 nav-blur border-b border-slate-700">
+    <div class="max-w-5xl mx-auto flex justify-between items-center px-6 py-4">
+      <h1 class="font-bold text-xl text-sky-300 font-fira">SKS Portfolio</h1>
+      <div class="space-x-6 text-slate-300 font-fira text-sm">
+        <button onclick="showSection('home')" class="hover:text-sky-400 nav-btn">Home</button>
+        <button onclick="showSection('about')" class="hover:text-sky-400 nav-btn">About</button>
+        <button onclick="showSection('skills')" class="hover:text-sky-400 nav-btn">Skills</button>
+        <button onclick="showSection('projects')" class="hover:text-sky-400 nav-btn">Projects</button>
+        <button onclick="showSection('resume')" class="hover:text-sky-400 nav-btn">Resume</button>
+        <button onclick="showSection('contact')" class="hover:text-sky-400 nav-btn">Contact</button>
+      </div>
     </div>
+  </nav>
 
+  <!-- Sections -->
+  <section id="home" class="active-section flex-col text-center">
+    <div>
+      <h1 class="text-5xl sm:text-6xl font-bold gradient-text mb-4">Sumit Kumar Singh</h1>
+      <p class="text-lg sm:text-xl text-slate-400 font-fira">Information Science Student | Tech Enthusiast</p>
+      <div class="mt-10 flex justify-center space-x-4">
+        <button onclick="showSection('projects')" class="bg-sky-500 hover:bg-sky-600 text-slate-900 px-6 py-3 rounded-full font-bold transition-all">View Projects</button>
+        <button onclick="showSection('contact')" class="border border-sky-400 text-sky-400 hover:bg-sky-400 hover:text-slate-900 px-6 py-3 rounded-full font-bold transition-all">Contact Me</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="flex-col">
+    <div class="card max-w-3xl mx-auto text-left">
+      <h2 class="text-3xl font-bold text-slate-100 mb-6">👋 About Me</h2>
+      <p class="text-slate-400 leading-relaxed">
+        I'm a third-year Information Science student at Atria Institute of Technology, Bengaluru.
+        Skilled in Java and Python, I enjoy creating efficient and visually appealing software.
+        As a sports enthusiast, I’ve captained my school volleyball team and represent my college football team.
+        I thrive in teamwork and love solving real-world challenges through technology.
+      </p>
+    </div>
+  </section>
+
+  <section id="skills" class="flex-col">
+    <div class="card max-w-2xl mx-auto text-left">
+      <h2 class="text-3xl font-bold text-slate-100 mb-6">🧠 Skills</h2>
+      <div class="flex flex-col items-start gap-3">
+        <span class="skill-badge">Python</span>
+        <span class="skill-badge">Java</span>
+        <span class="skill-badge">C</span>
+        <span class="skill-badge">HTML/CSS</span>
+        <span class="skill-badge">JavaScript</span>
+        <span class="skill-badge">PHP</span>
+        <span class="skill-badge">MySQL</span>
+        <span class="skill-badge">DBMS</span>
+        <span class="skill-badge">OS</span>
+        <span class="skill-badge">Web Development</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="flex-col">
+    <div class="card max-w-4xl mx-auto text-left">
+      <h2 class="text-3xl font-bold text-slate-100 mb-6">📂 Projects</h2>
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl font-bold text-sky-400">COVID-19 Testing Management System</h3>
+          <p class="text-slate-400">PHP & MySQL web app for managing and tracking COVID-19 test records.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-sky-400">Fitness Tracker App</h3>
+          <p class="text-slate-400">Responsive UI built from Figma designs for a fitness tracking app.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-sky-400">Portfolio CLI</h3>
+          <p class="text-slate-400">A Python CLI tool featuring GitHub API integration and dynamic styling.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-sky-400">To-Do Application</h3>
+          <p class="text-slate-400">A Java-based task manager that lets users add, update, and delete tasks with JDBC and MySQL integration.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-sky-400">Obstacle Avoiding Rover</h3>
+          <p class="text-slate-400">Arduino-powered rover that avoids obstacles using ultrasonic sensors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume" class="flex-col">
+    <div class="card max-w-3xl mx-auto text-left">
+      <h2 class="text-3xl font-bold text-slate-100 mb-6">📜 Resume</h2>
+      <p class="text-slate-300 mb-2 font-fira">B.Tech in Information Science & Engineering</p>
+      <p class="text-slate-400">Atria Institute of Technology, Bengaluru (2023–2027)</p>
+      <p class="mt-4 text-slate-300">For a full copy of my resume, please contact me via email or LinkedIn.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="flex-col">
+    <div class="card max-w-3xl mx-auto text-left">
+      <h2 class="text-3xl font-bold text-slate-100 mb-6">📞 Contact</h2>
+      <div class="flex flex-col space-y-4 text-slate-300">
+        <a href="mailto:sumitkumarsingh7502@gmail.com" class="hover:text-sky-400">📧 sumitkumarsingh7502@gmail.com</a>
+        <a href="https://github.com/Sumit692" target="_blank" class="hover:text-sky-400">💻 github.com/Sumit692</a>
+        <a href="https://www.linkedin.com/in/sumit-kumar-singh-624507203" target="_blank" class="hover:text-sky-400">🔗 LinkedIn Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2025 Sumit Kumar Singh. All Rights Reserved.
+  </div>
+
+  <script>
+    let currentSection = 'home';
+
+    function showSection(sectionId) {
+      if (sectionId === currentSection) return;
+
+      const current = document.getElementById(currentSection);
+      const next = document.getElementById(sectionId);
+
+      current.classList.remove('active-section');
+      current.style.opacity = 0;
+      current.style.display = 'none';
+
+      next.style.display = 'flex';
+      next.style.opacity = 0;
+      next.style.transform = 'translateX(100%)';
+
+      setTimeout(() => {
+        next.classList.add('active-section');
+        next.style.transform = 'translateX(0)';
+        next.style.opacity = 1;
+      }, 50);
+
+      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("nav-active"));
+      const activeBtn = [...document.querySelectorAll(".nav-btn")].find(btn => btn.textContent.toLowerCase() === sectionId);
+      if (activeBtn) activeBtn.classList.add("nav-active");
+
+      currentSection = sectionId;
+    }
+  </script>
 </body>
 </html>
-
-
-
-
-
-
