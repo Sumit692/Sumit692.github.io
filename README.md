@@ -1,4 +1,4 @@
-🌐 Sumit Kumar Singh – Developer Portfolio
+**🌐 Sumit Kumar Singh – Developer Portfolio**
 
 A modern, responsive, and animated personal portfolio website built using HTML, Tailwind CSS, and JavaScript.
 
